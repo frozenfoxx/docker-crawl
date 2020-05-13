@@ -3,10 +3,12 @@ FROM ubuntu:20.04
 
 # Variables
 ENV CRAWL_REPO="https://github.com/crawl/crawl.git" \
-  BUILD_DEPS="autoconf bison build-essential flex git liblua5.1-0-dev libncursesw5-dev \
+  BUILD_DEPS="autoconf bison build-essential flex git libncursesw5-dev \
     libsqlite3-dev libz-dev pkg-config binutils-gold libsdl2-image-dev libsdl2-mixer-dev \
     libsdl2-dev libfreetype6-dev libpng-dev ttf-dejavu-core advancecomp pngcrush" \
-  APP_DEPS="bzip2 python3-minimal python3-pip python3-yaml ncurses-term locales-all sqlite3 libpcre3 locales lsof sudo libbot-basicbot-perl" \
+  APP_DEPS="bzip2 liblua5.1-0-dev python3-minimal python3-pip python3-yaml \
+    python-is-python3 ncurses-term locales-all sqlite3 libpcre3 locales \
+    lsof sudo libbot-basicbot-perl" \
   DEBIAN_FRONTEND=noninteractive
 
 # Logic
@@ -31,3 +33,9 @@ RUN apt-get remove -y ${BUILD_DEPS} && \
 
 # Expose ports
 EXPOSE 8080
+
+# Set the WORKDIR
+WORKDIR /src/crawl-ref/source
+
+# Launch WebTiles server
+CMD [ "./webserver/server.py" ]
