@@ -22,7 +22,7 @@ RUN git clone ${CRAWL_REPO} /src/
 
 # Build crawl
 RUN cd /src/crawl-ref/source && \
-  make -j4 USE_DGAMELAUNCH=y WEBTILES=y
+  make -j4 USE_DGAMELAUNCH=y TILES=y
 
 # Clean up unnecessary packages
 RUN apt-get remove -y ${BUILD_DEPS} && \
