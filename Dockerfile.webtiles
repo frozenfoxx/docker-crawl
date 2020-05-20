@@ -26,6 +26,9 @@ RUN git clone ${CRAWL_REPO} /src/
 RUN cd /src/crawl-ref/source && \
   make -j4 USE_DGAMELAUNCH=y WEBTILES=y
 
+# Make directory for RCs
+RUN mkdir -p /src/crawl-ref/source/rcs
+
 # Clean up unnecessary packages
 RUN apt-get remove -y ${BUILD_DEPS} && \
   apt-get autoremove --purge -y && \
