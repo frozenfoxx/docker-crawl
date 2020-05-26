@@ -1,5 +1,5 @@
-# Base image
-FROM ubuntu:20.04
+# Builder image
+FROM ubuntu:20.04 AS builder
 
 # Variables
 ENV CRAWL_REPO="https://github.com/crawl/crawl.git" \
@@ -11,34 +11,61 @@ ENV CRAWL_REPO="https://github.com/crawl/crawl.git" \
     libsdl2-dev libfreetype6-dev libpng-dev ttf-dejavu-core advancecomp pngcrush" \
   DEBIAN_FRONTEND=noninteractive
 
-# Logic
+# Install packages for the build
 RUN apt-get update && \
   apt-get upgrade -y && \
   apt-get install -y ${BUILD_DEPS} ${APP_DEPS}
-
-# Install Tornado
-RUN pip3 install tornado
 
 # Retrieve crawl
 RUN git clone ${CRAWL_REPO} /src/
 
 # Build crawl
 RUN cd /src/crawl-ref/source && \
-  make -j4 USE_DGAMELAUNCH=y WEBTILES=y
+  make install -j4 DESTDIR=/app/ USE_DGAMELAUNCH=y WEBTILES=y
 
-# Make directory for RCs
-RUN mkdir -p /src/crawl-ref/source/rcs
+# Set up webserver components
+RUN cp -r /src/crawl-ref/source/webserver /app/ && \
+  cp -r /src/crawl-ref/source/util /app/
 
-# Clean up unnecessary packages
-RUN apt-get remove -y ${BUILD_DEPS} && \
-  apt-get autoremove --purge -y && \
-  rm -rf /var/lib/apt/lists/*
+# Runtime image
+FROM ubuntu:20.04
+
+# Environment Variables
+ENV APP_DEPS="bzip2 liblua5.1-0-dev python3-minimal python3-pip python3-yaml \
+    python-is-python3 ncurses-term locales-all sqlite3 libpcre3 locales \
+    lsof sudo libbot-basicbot-perl" \
+  DATA_DIR=/data \
+  DEBIAN_FRONTEND=noninteractive
+
+# Install packages for the runtime
+RUN apt-get update && \
+  apt-get upgrade -y && \
+  apt-get install -y ${APP_DEPS}
+
+# Install Tornado
+RUN pip3 install tornado
+
+# Copy over the compiled files
+COPY --from=builder /app/ /app/
+
+# Copy over custom configs
+COPY settings/init.txt /app/settings/
+COPY util/webtiles-init-player.sh /app/util/
+COPY webserver/config.py /app/webserver/
+COPY webserver/games.d/* /app/webserver/games.d/
+
+# Adjustments for the container
+RUN mkdir -p /data/rcs && \
+  mkdir -p /data/webserver
+
+# Clean up unnecessary package lists
+RUN rm -rf /var/lib/apt/lists/*
 
 # Expose ports
 EXPOSE 8080
 
 # Set the WORKDIR
-WORKDIR /src/crawl-ref/source
+WORKDIR /app
 
 # Launch WebTiles server
 CMD [ "./webserver/server.py" ]
