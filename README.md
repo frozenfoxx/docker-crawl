@@ -12,6 +12,16 @@ cd docker-crawl
 docker build .
 ```
 
+To build a Webtiles server build explicitly:
+```
+docker build -f Dockerfile.webtiles .
+```
+
+To build a Tiles server build explicitly:
+```
+docker build -f Dockerfile.tiles .
+```
+
 # How to Use this Image
 
 ## Quickstart
@@ -30,7 +40,7 @@ All player RCs and webserver database files are located within `/data` within th
 docker run \
   -d \
   --rm \
-  -v /data:/data \
+  -v /data/:/data \
   -p 8080:8080 \
   --name=crawl_webtiles \
   frozenfoxx/crawl:latest
