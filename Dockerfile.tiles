@@ -46,9 +46,8 @@ COPY --from=builder /app/ /app/
 # Copy over custom configs
 COPY settings/init.txt /app/settings/
 
-# Adjustments for the container
-RUN mkdir -p /data/rcs && \
-  mkdir -p /data/webserver
+# COPY over the entrypoint
+COPY scripts/entrypoint-tiles.sh /app/entrypoint.sh
 
 # Clean up unnecessary package lists
 RUN rm -rf /var/lib/apt/lists/*
@@ -59,5 +58,5 @@ EXPOSE 8080
 # Set the WORKDIR
 WORKDIR /app
 
-# Launch WebTiles server
-CMD [ "./webserver/server.py" ]
+# Launch Tiles
+ENTRYPOINT [ "./entrypoint.sh" ]

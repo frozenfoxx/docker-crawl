@@ -54,9 +54,8 @@ COPY util/webtiles-init-player.sh /app/util/
 COPY webserver/config.py /app/webserver/
 COPY webserver/games.d/* /app/webserver/games.d/
 
-# Adjustments for the container
-RUN mkdir -p /data/rcs && \
-  mkdir -p /data/webserver
+# Copy over the entrypoint
+COPY scripts/entrypoint-webtiles.sh /app/entrypoint.sh
 
 # Clean up unnecessary package lists
 RUN rm -rf /var/lib/apt/lists/*
@@ -68,4 +67,4 @@ EXPOSE 8080
 WORKDIR /app
 
 # Launch WebTiles server
-CMD [ "./webserver/server.py" ]
+ENTRYPOINT [ "./entrypoint.sh" ]
