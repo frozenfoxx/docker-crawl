@@ -9,11 +9,20 @@ DATA_DIR=${DATA_DIR:-"/data"}
 ## Create server directories if they do not exist
 create_server_dirs()
 {
-  mkdir -p ${DATA_DIR}/rcs
-  mkdir -p ${DATA_DIR}/webserver
+  if ! [[ -d ${DATA_DIR}/rcs ]]; then
+    echo "${DATA_DIR}/rcs didn't exist, creating it now..."
+    mkdir -p ${DATA_DIR}/rcs
+  fi
+
+  if ! [[ -d ${DATA_DIR}/webserver ]]; then
+    echo "${DATA_DIR}/webserver didn't exist, creating it now..."
+    mkdir -p ${DATA_DIR}/webserver
+  fi
 }
 
 # Logic
+
+create_server_dirs
 
 cd ${APPDIR}
 ./webserver/server.py $@
