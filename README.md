@@ -1,5 +1,7 @@
 # docker-crawl
 
+[![Build Status](https://cloud.drone.io/api/badges/frozenfoxx/docker-crawl/status.svg?ref=refs/heads/main)](https://cloud.drone.io/frozenfoxx/docker-crawl)
+
 Docker container for Dungeon Crawl Stone Soup (DCSS).
 
 Docker Hub: [https://hub.docker.com/r/frozenfoxx/crawl](https://hub.docker.com/r/frozenfoxx/crawl)
