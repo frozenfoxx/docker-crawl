@@ -39,7 +39,7 @@ jobs:
           context: crawl
           builder: ${{ steps.buildx.outputs.name }}
           push: true
-          tags: dkirby-ms/crawl:latest
+          tags: saitcho/crawl:latest
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
       -
