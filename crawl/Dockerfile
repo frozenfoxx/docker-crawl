@@ -5,7 +5,7 @@ FROM ubuntu:20.04 AS builder
 ENV CRAWL_REPO="https://github.com/crawl/crawl.git" \
   APP_DEPS="bzip2 liblua5.1-0-dev python3-minimal python3-pip python3-yaml \
     python-is-python3 ncurses-term locales-all sqlite3 libpcre3 locales \
-    lsof sudo libbot-basicbot-perl" \
+    lsof sudo libbot-basicbot-perl cifs-utils keyutils" \
   BUILD_DEPS="autoconf bison build-essential flex git libncursesw5-dev \
     libsqlite3-dev libz-dev pkg-config binutils-gold libsdl2-image-dev libsdl2-mixer-dev \
     libsdl2-dev libfreetype6-dev libpng-dev ttf-dejavu-core advancecomp pngcrush" \
