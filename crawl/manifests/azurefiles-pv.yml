@@ -13,8 +13,8 @@ spec:
     shareName: crawlshare
     readOnly: false
   mountOptions:
-  - dir_mode=0777
-  - file_mode=0777
+  - dir_mode=0755
+  - file_mode=0755
   - uid=0
   - gid=0
   - mfsymlinks

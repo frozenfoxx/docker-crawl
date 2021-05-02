@@ -31,7 +31,7 @@ games:
       # the webtiles server and DCSS executable. If you change the CWD with a
       # crawl_binary script, this path will have to be absolute (so both the
       # server and DCSS can find it).
-      socket_path: /data/rcs
+      socket_path: /tmp
       # # The DCSS "dir" is where save games plus logfile/milestones files are
       # # written. If you don't specify this, the game uses a compile-time default,
       # # which depends on your OS and compilation settings.
@@ -93,7 +93,7 @@ games:
       morgue_path: /data/rcs/%n
       inprogress_path: /data/rcs/running
       ttyrec_path: /data/rcs/ttyrecs/%n
-      socket_path: /data/rcs
+      socket_path: /tmp
       client_path: /app/webserver/game_data/
       # dir_path: .
       # cwd: .
@@ -113,7 +113,7 @@ games:
       morgue_path: /data/rcs/%n
       inprogress_path: /data/rcs/running
       ttyrec_path: /data/rcs/ttyrecs/%n
-      socket_path: /data/rcs
+      socket_path: /tmp
       client_path: /app/webserver/game_data/
       # dir_path: .
       # cwd: .

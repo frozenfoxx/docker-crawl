@@ -22,6 +22,10 @@ spec:
         volumeMounts: 
           - name: azure
             mountPath: /data
+      # volumes:
+      # - name: volume
+      #   persistentVolumeClaim:
+      #     claimName: azure-managed-disk
       volumes:
       - name: azure
         persistentVolumeClaim:

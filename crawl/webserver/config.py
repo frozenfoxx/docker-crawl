@@ -38,7 +38,7 @@ bind_port = 8080
 # )
 
 logging_config = {
-    "filename": "webtiles.log",
+#    "filename": "webtiles.log",
     "level": logging.INFO,
     "format": "%(asctime)s %(levelname)s: %(message)s"
 }
@@ -52,7 +52,7 @@ static_path = "./webserver/static"
 template_path = "./webserver/templates/"
 
 # Path for server-side unix sockets (to be used to communicate with crawl)
-server_socket_path = "/data/rcs" # Uses global temp dir
+server_socket_path = None # Uses global temp dir
 
 # Server name, so far only used in the ttyrec metadata
 server_id = ""
@@ -82,7 +82,7 @@ games = OrderedDict([
         morgue_path = "/data/rcs/%n",
         inprogress_path = "/data/rcs/running",
         ttyrec_path = "/data/rcs/ttyrecs/%n",
-        socket_path = "/data/rcs",
+        socket_path = "/tmp",
         client_path = "/app/webserver/game_data/",
         # dir_path = ".",
         # cwd = ".",
