@@ -33,7 +33,7 @@ FROM ubuntu:20.04
 # Environment Variables
 ENV APP_DEPS="bzip2 liblua5.1-0-dev python3-minimal python3-pip python3-yaml \
     python-is-python3 ncurses-term locales-all sqlite3 libpcre3 locales \
-    lsof sudo libbot-basicbot-perl" \
+    lsof sudo libbot-basicbot-perl cifs-utils keyutils" \
   DATA_DIR=/data \
   DEBIAN_FRONTEND=noninteractive
 
