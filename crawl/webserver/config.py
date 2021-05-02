@@ -52,7 +52,7 @@ static_path = "./webserver/static"
 template_path = "./webserver/templates/"
 
 # Path for server-side unix sockets (to be used to communicate with crawl)
-server_socket_path = "/var/tmp/" # Uses global temp dir
+server_socket_path = "/data/rcs" # Uses global temp dir
 
 # Server name, so far only used in the ttyrec metadata
 server_id = ""
