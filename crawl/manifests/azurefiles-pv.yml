@@ -19,4 +19,4 @@ spec:
   - gid=0
   - mfsymlinks
   - nobrl
-  - nosharesock
+  
