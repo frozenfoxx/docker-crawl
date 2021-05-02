@@ -8,7 +8,7 @@ ENV CRAWL_REPO="https://github.com/crawl/crawl.git" \
     lsof sudo libbot-basicbot-perl cifs-utils keyutils" \
   BUILD_DEPS="autoconf bison build-essential flex git libncursesw5-dev \
     libsqlite3-dev libz-dev pkg-config binutils-gold libsdl2-image-dev libsdl2-mixer-dev \
-    libsdl2-dev libfreetype6-dev libpng-dev ttf-dejavu-core advancecomp pngcrush" \
+    libsdl2-dev libfreetype6-dev libpng-dev ttf-dejavu-core advancecomp pngcrush cifs-utils keyutils" \
   DEBIAN_FRONTEND=noninteractive
 
 # Install packages for the build
