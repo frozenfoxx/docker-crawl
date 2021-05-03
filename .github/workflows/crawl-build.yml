@@ -1,4 +1,4 @@
-name: CI
+name: Crawl-build-and-push
 
 on:
   push:
