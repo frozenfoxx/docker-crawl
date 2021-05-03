@@ -3,13 +3,16 @@ FROM ubuntu:20.04 AS builder
 
 # Variables
 ENV CRAWL_REPO="https://github.com/crawl/scoring.git" \
-  APP_DEPS="python3-minimal python3-pip python3-yaml python-is-python3 mako PyYAML MySQL-python" \
+  APP_DEPS="python3-minimal python3-pip python3-yaml python-is-python3" \
   DEBIAN_FRONTEND=noninteractive
 
-# Install packages for the build
+# Install packages
 RUN apt-get update && \
   apt-get upgrade -y && \
   apt-get install -y ${APP_DEPS}
+
+# Install python packages
+RUN pip3 install tornado mako PyYAML MySQL-python
 
 # Retrieve crawl scoring
 RUN git clone ${CRAWL_REPO} /scoring/
