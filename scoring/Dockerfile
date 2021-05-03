@@ -12,7 +12,7 @@ RUN apt-get update && \
   apt-get install -y ${APP_DEPS}
 
 # Install python packages
-RUN pip3 install tornado mako PyYAML MySQL-python
+RUN pip3 install tornado mako PyYAML mysqlclient
 
 # Retrieve crawl scoring
 RUN git clone ${CRAWL_REPO} /scoring/
