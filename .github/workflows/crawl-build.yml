@@ -2,8 +2,13 @@ name: Crawl-build-and-push
 
 on:
   push:
+    paths:
+      - 'crawl/Dockerfile'
+      - '.github/workflows/crawl-build.yml'
     branches:
       - 'main'
+  schedule:
+    - cron: '0 0 * * *'
 
 # Environment variables available to all jobs and steps in this workflow
 env:

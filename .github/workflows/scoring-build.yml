@@ -2,8 +2,13 @@ name: Scoring-build-and-push
 
 on:
   push:
+    paths:
+      - 'scoring/Dockerfile'
+      - '.github/workflows/scoring-build.yml'
     branches:
       - 'main'
+  schedule:
+    - cron: '0 0 * * *'
 
 # Environment variables available to all jobs and steps in this workflow
 env:
