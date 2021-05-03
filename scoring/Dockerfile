@@ -3,7 +3,7 @@ FROM ubuntu:20.04 AS builder
 
 # Variables
 ENV CRAWL_REPO="https://github.com/crawl/scoring.git" \
-  APP_DEPS="python3-minimal python3-pip python3-yaml python-is-python3" \
+  APP_DEPS="python3-minimal python3-pip python3-yaml python-is-python3 mysql-server" \
   DEBIAN_FRONTEND=noninteractive
 
 # Install packages
