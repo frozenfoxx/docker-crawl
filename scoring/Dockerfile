@@ -1,5 +1,5 @@
 # Scoring image
-FROM ubuntu:20.04 AS builder
+FROM nginx:latest
 
 # Variables
 ENV CRAWL_REPO="https://github.com/crawl/scoring.git" \
@@ -12,7 +12,7 @@ RUN apt-get update && \
   apt-get install -y ${APP_DEPS}
 
 # Install python packages
-RUN pip3 install tornado mako PyYAML mysqlclient
+RUN pip3 install mako PyYAML mysqlclient
 
 # Retrieve crawl scoring
 RUN git clone ${CRAWL_REPO} /scoring/
@@ -25,6 +25,3 @@ RUN rm -rf /var/lib/apt/lists/*
 
 # Set the WORKDIR
 WORKDIR /scoring
-
-# Launch scoring process
-ENTRYPOINT [ "python ./scbootstrap.py" ]
