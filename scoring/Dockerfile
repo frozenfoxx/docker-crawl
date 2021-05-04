@@ -3,7 +3,7 @@ FROM ubuntu:20.04
 
 # Variables
 ENV CRAWL_REPO="https://github.com/crawl/scoring.git" \
-  APP_DEPS="python python-minimal nginx mysql-server libmysqlclient-dev git" \
+  APP_DEPS="python python2-minimal nginx mysql-server libmysqlclient-dev git" \
   DEBIAN_FRONTEND=noninteractive
 
 # Install packages
