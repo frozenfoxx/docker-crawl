@@ -3,7 +3,7 @@ FROM ubuntu:20.04
 
 # Variables
 ENV CRAWL_REPO="https://github.com/crawl/scoring.git" \
-  APP_DEPS="curl build-essential python python2-minimal python-dev nginx mysql-server libmysqlclient-dev git software-properties-common" \
+  APP_DEPS="curl build-essential python python2-minimal python-dev locales-all nginx mysql-server libmysqlclient-dev git software-properties-common" \
   DEBIAN_FRONTEND=noninteractive
 
 # Install packages
@@ -35,9 +35,9 @@ COPY settings/initScoringDb.sql /scoring/initScoringDb.sql
 RUN rm -rf /var/lib/apt/lists/*
 
 # Set required locales
-RUN export LC_ALL="en_US.UTF-8" && \
-    export LC_CTYPE="en_US.UTF-8" && \
-    dpkg-reconfigure locales 
+# RUN export LC_ALL="en_US.UTF-8" && \
+#     export LC_CTYPE="en_US.UTF-8" && \
+#     dpkg-reconfigure locales 
 
 # Set permissions on executables
 RUN chmod 700 /scoring/scoresd.py && \
