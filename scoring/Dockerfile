@@ -12,7 +12,7 @@ RUN apt-get update && \
   apt-get install -y ${APP_DEPS}
 
 # Install python packages
-RUN pip3 install mako PyYAML mysqlclient
+RUN pip install mako PyYAML mysqlclient
 
 # Retrieve crawl scoring
 RUN git clone ${CRAWL_REPO} /scoring/
