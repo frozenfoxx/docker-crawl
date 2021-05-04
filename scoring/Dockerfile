@@ -7,9 +7,13 @@ ENV CRAWL_REPO="https://github.com/crawl/scoring.git" \
   DEBIAN_FRONTEND=noninteractive
 
 # Install packages
-RUN apt-get update && \
-  apt-get upgrade -y && \
-  apt-get install -y ${APP_DEPS}
+# RUN apt-get update && \
+#   apt-get upgrade -y && \
+#   apt-get install -y ${APP_DEPS}
+RUN apk update && \
+    apk update && \
+    apk add ${APP_DEPS}
+
 
 # Install python packages
 RUN pip3 install mako PyYAML mysqlclient
