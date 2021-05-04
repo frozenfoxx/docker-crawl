@@ -19,7 +19,7 @@ RUN git clone ${CRAWL_REPO} /scoring/
 
 # Copy over custom configs
 COPY settings/sources.yml /scoring/sources.yml
-COPY settings/nginx.conf /etc/nginx/nginx.conf
+COPY settings/nginx.conf /etc/nginx/sites-enabled/crawl.conf
 COPY settings/initScoringDb.sql /scoring/initScoringDb.sql
 
 # RUN mysql -h localhost 
