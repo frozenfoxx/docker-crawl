@@ -5,6 +5,7 @@ on:
     paths:
       - 'scoring/Dockerfile'
       - '.github/workflows/scoring-build.yml'
+      - 'scoring/settings/**'
     branches:
       - 'main'
   schedule:
