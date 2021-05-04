@@ -32,4 +32,4 @@ EXPOSE 80
 # Set the WORKDIR
 WORKDIR /scoring
 
-CMD service nginx start
+CMD ["nginx", "-g", "daemon off;"]
