@@ -9,7 +9,13 @@ ENV CRAWL_REPO="https://github.com/crawl/scoring.git" \
 # Install packages
 RUN apt-get update && \
   apt-get upgrade -y && \
+  add-apt-repository universe && \
   apt-get install -y ${APP_DEPS}
+
+# Install pip for python2
+RUN curl https://bootstrap.pypa.io/pip/2.7/get-pip.py --output get-pip.py && \
+    chmod 700 get-pip.py && \
+    python2 get-pip.py
 
 # Install python packages
 RUN pip install mako PyYAML mysqlclient
@@ -26,6 +32,10 @@ COPY settings/initScoringDb.sql /scoring/initScoringDb.sql
 
 # Clean up unnecessary package lists
 RUN rm -rf /var/lib/apt/lists/*
+
+# Set permissions on executables
+RUN chmod 700 /scoring/scoresd.py && \
+    chmod 700 /scoring/scbootstrap.py
 
 EXPOSE 80
 
