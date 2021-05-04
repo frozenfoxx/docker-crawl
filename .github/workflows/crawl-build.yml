@@ -59,21 +59,3 @@ jobs:
       -
         name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
-      # # Set the target Azure Kubernetes Service (AKS) cluster. 
-      # - uses: azure/aks-set-context@v1
-      #   with:
-      #     creds: '${{ secrets.AZURESP }}'
-      #     cluster-name: ${{ env.CLUSTER_NAME }}
-      #     resource-group: ${{ env.CLUSTER_RESOURCE_GROUP }}
-      # # Create namespace if doesn't exist
-      # - 
-      #   run: |
-      #     kubectl create namespace ${{ env.NAMESPACE }} --dry-run -o json | kubectl apply -f -
-      # # Deploy app to AKS
-      # - uses: azure/k8s-deploy@v1.4
-      #   with:
-      #     manifests: |
-      #       manifests/deployment.yml
-      #       manifests/service.yml
-      #     images: saitcho/crawl
-      #     namespace: ${{ env.NAMESPACE }}
