@@ -10,7 +10,8 @@ ENV CRAWL_REPO="https://github.com/crawl/scoring.git" \
 RUN apt-get update && \
   apt-get upgrade -y && \
   apt-get install -y ${APP_DEPS} && \
-  add-apt-repository universe 
+  add-apt-repository universe && \
+  apt-get update
 
 # Install pip for python2
 RUN curl https://bootstrap.pypa.io/pip/2.7/get-pip.py --output get-pip.py && \
