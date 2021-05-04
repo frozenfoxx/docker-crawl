@@ -3,7 +3,7 @@ name: Crawl-build-and-push
 on:
   push:
     paths:
-      - 'crawl/Dockerfile'
+      - 'crawl/**'
       - '.github/workflows/crawl-build.yml'
     branches:
       - 'main'
