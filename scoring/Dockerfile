@@ -34,6 +34,11 @@ COPY settings/initScoringDb.sql /scoring/initScoringDb.sql
 # Clean up unnecessary package lists
 RUN rm -rf /var/lib/apt/lists/*
 
+# Set required locales
+RUN export LC_ALL="en_US.UTF-8" && \
+    export LC_CTYPE="en_US.UTF-8" && \
+    sudo dpkg-reconfigure locales 
+
 # Set permissions on executables
 RUN chmod 700 /scoring/scoresd.py && \
     chmod 700 /scoring/scbootstrap.py
