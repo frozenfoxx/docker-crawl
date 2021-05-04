@@ -35,7 +35,7 @@ games:
       # # The DCSS "dir" is where save games plus logfile/milestones files are
       # # written. If you don't specify this, the game uses a compile-time default,
       # # which depends on your OS and compilation settings.
-      # dir_path: .
+      dir_path: /data/logfiles/trunk
       # Directory where ttyrec files for active games are written to.
       # Relative to the server's CWD.
       inprogress_path: /data/rcs/running
@@ -95,7 +95,7 @@ games:
       ttyrec_path: /data/rcs/ttyrecs/%n
       socket_path: /tmp
       client_path: /app/webserver/game_data/
-      # dir_path: .
+      dir_path: /data/logfiles/trunk
       # cwd: .
       morgue_url: None
       # milestone_path: ./rcs/milestones
@@ -115,7 +115,7 @@ games:
       ttyrec_path: /data/rcs/ttyrecs/%n
       socket_path: /tmp
       client_path: /app/webserver/game_data/
-      # dir_path: .
+      dir_path: /data/logfiles/trunk
       # cwd: .
       morgue_url: None
       # milestone_path: ./rcs/milestones
