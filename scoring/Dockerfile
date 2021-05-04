@@ -27,4 +27,4 @@ RUN rm -rf /var/lib/apt/lists/*
 WORKDIR /scoring
 
 # Launch scoring process
-ENTRYPOINT [ "./scbootstrap.py" ]
+ENTRYPOINT [ "python ./scbootstrap.py" ]

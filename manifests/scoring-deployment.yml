@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: scoring-deployment
+  labels:
+    app: scoring
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: scoring
+  template:
+    metadata:
+      labels:
+        app: scoring
+    spec:
+      containers:
+      - name: scoring
+        image: saitcho/scoring:latest
+        ports:
+        - containerPort: 80
+        volumeMounts: 
+          - name: azure
+            mountPath: /data
+      # volumes:
+      # - name: volume
+      #   persistentVolumeClaim:
+      #     claimName: azure-managed-disk
+      volumes:
+      - name: azure
+        persistentVolumeClaim:
+          claimName: azurefile
