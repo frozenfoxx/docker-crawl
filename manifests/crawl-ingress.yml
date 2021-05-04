@@ -1,0 +1,33 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: crawl-ingress
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    nginx.ingress.kubernetes.io/use-regex: "true"
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /scoring
+        pathType: Prefix
+        backend:
+          service:
+            name: scoring-service
+            port:
+              number: 80
+      - path: /morgue
+        pathType: Prefix
+        backend:
+          service:
+            name: scoring-service
+            port:
+              number: 80
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: crawl-service
+            port:
+              number: 8080
