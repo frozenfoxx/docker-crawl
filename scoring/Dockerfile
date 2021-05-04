@@ -3,14 +3,14 @@ FROM ubuntu:20.04
 
 # Variables
 ENV CRAWL_REPO="https://github.com/crawl/scoring.git" \
-  APP_DEPS="python python2-minimal nginx mysql-server libmysqlclient-dev git" \
+  APP_DEPS="python python2-minimal nginx mysql-server libmysqlclient-dev git software-properties-common" \
   DEBIAN_FRONTEND=noninteractive
 
 # Install packages
 RUN apt-get update && \
   apt-get upgrade -y && \
-  add-apt-repository universe && \
-  apt-get install -y ${APP_DEPS}
+  apt-get install -y ${APP_DEPS} && \
+  add-apt-repository universe 
 
 # Install pip for python2
 RUN curl https://bootstrap.pypa.io/pip/2.7/get-pip.py --output get-pip.py && \
