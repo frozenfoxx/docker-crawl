@@ -27,17 +27,12 @@ RUN git clone ${CRAWL_REPO} /scoring/
 # Copy over custom configs
 COPY settings/sources.yml /scoring/sources.yml
 COPY settings/nginx.conf /etc/nginx/sites-enabled/crawl.conf
-COPY settings/initScoringDb.sql /scoring/initScoringDb.sql
+COPY settings/init-scoring.sh /scoring/init-scoring.sh
 
 # RUN mysql -h localhost 
 
 # Clean up unnecessary package lists
 RUN rm -rf /var/lib/apt/lists/*
-
-# Set required locales
-# RUN export LC_ALL="en_US.UTF-8" && \
-#     export LC_CTYPE="en_US.UTF-8" && \
-#     dpkg-reconfigure locales 
 
 # Set permissions on executables
 RUN chmod 700 /scoring/scoresd.py && \
