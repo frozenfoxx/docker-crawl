@@ -17,6 +17,7 @@ Forked from: [frozenfoxx/docker-crawl](https://github.com/frozenfoxx/docker-craw
   * Edit ./scoring/settings/sources.yml and provide your server URL and adjust paths to logfiles/milestones if needed
   * Edit ./scoring/settings/toplink.mako and provide your server URL
   * Edit ./scoring/settings/index.mako and provide your server URL
+  * Edit ./webserver/banner.html to customize the Webtiles banner
 
 ## Deploy
 
