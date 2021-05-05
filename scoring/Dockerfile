@@ -33,8 +33,6 @@ COPY settings/init-scoring.sh /scoring/init-scoring.sh
 COPY settings/toplink.mako /scoring/templates/toplink.mako
 COPY settings/index.mako /scoring/templates/index.mako
 
-# RUN mysql -h localhost 
-
 # Clean up unnecessary package lists
 RUN rm -rf /var/lib/apt/lists/*
 
