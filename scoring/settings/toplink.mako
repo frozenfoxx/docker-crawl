@@ -7,5 +7,5 @@
   &nbsp;
   <a href="${SCORING_BASE_URL}/index.html">ToC</a>
   &nbsp;
-  <a href="http://crawl.akrasiac.org">crawl.kirbytoso.xyz</a>
+  <a href="http://crawl.kirbytoso.xyz">Play Crawl</a>
 </div>
