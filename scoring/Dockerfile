@@ -22,7 +22,9 @@ RUN curl https://bootstrap.pypa.io/pip/2.7/get-pip.py --output get-pip.py && \
 RUN pip install mako PyYAML mysqlclient
 
 # Retrieve crawl scoring
-RUN git clone ${CRAWL_REPO} /scoring/
+RUN git clone ${CRAWL_REPO} /scoring/ && \
+    mkdir /scoring/scoring && \
+    cp /scoring/templates/score.css /scoring/scoring/score.css
 
 # Copy over custom configs
 COPY settings/sources.yml /scoring/sources.yml
