@@ -53,6 +53,7 @@ COPY settings/init.txt /app/settings/
 COPY util/webtiles-init-player.sh /app/util/
 COPY webserver/config.py /app/webserver/
 COPY webserver/games.d/* /app/webserver/games.d/
+COPY webserver/banner.html /app/webserver/templates/banner.html
 
 # Copy over the entrypoint
 COPY scripts/entrypoint-webtiles.sh /app/entrypoint.sh
