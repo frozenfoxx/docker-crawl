@@ -11,6 +11,6 @@ Forked from: [frozenfoxx/docker-crawl](https://github.com/frozenfoxx/docker-craw
 
 ## Deploy
 
-## Persistent Deployment
+## Persistence
 
-All player RCs and webserver database files are located within `/data` within the container. Bind mount a host directory to this location to maintain persistence.
+All player RCs and webserver database files are located within `/data` within the container. Bind mount a host directory or use a persistent volume claim to maintain persistence.
