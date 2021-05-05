@@ -55,7 +55,7 @@ template_path = "./webserver/templates/"
 server_socket_path = None # Uses global temp dir
 
 # Server name, so far only used in the ttyrec metadata
-server_id = ""
+server_id = "ckx"
 
 # Disable caching of game data files
 game_data_no_cache = True
