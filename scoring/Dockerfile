@@ -30,6 +30,8 @@ RUN git clone ${CRAWL_REPO} /scoring/ && \
 COPY settings/sources.yml /scoring/sources.yml
 COPY settings/nginx.conf /etc/nginx/sites-enabled/crawl.conf
 COPY settings/init-scoring.sh /scoring/init-scoring.sh
+COPY settings/toplink.mako /scoring/templates/toplink.mako
+COPY settings/index.mako /scoring/templates/index.mako
 
 # RUN mysql -h localhost 
 
