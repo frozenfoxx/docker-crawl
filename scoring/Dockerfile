@@ -36,11 +36,12 @@ RUN rm -rf /var/lib/apt/lists/*
 
 # Set permissions on executables
 RUN chmod 700 /scoring/scoresd.py && \
-    chmod 700 /scoring/scbootstrap.py
+    chmod 700 /scoring/scbootstrap.py && \
+    chmod 700 /scoring/init-scoring.sh
 
 EXPOSE 80
 
 # Set the WORKDIR
 WORKDIR /scoring
 
-CMD ["nginx", "-g", "daemon off;"]
+CMD ["./init-scoring.sh"]
