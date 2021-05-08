@@ -1,4 +1,4 @@
-name: Crawl-build-and-push
+name: Crawl-build-trunk0and-push
 
 on:
   push:
@@ -51,9 +51,10 @@ jobs:
         id: docker_build
         uses: docker/build-push-action@v2
         with:
-          context: crawl/Dockerfile
+          context: crawl
           builder: ${{ steps.buildx.outputs.name }}
           push: true
+          file: crawl/Dockerfile
           tags: saitcho/crawl:latest
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
