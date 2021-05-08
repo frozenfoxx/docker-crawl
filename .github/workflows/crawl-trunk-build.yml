@@ -4,7 +4,7 @@ on:
   push:
     paths:
       - 'crawl/**'
-      - '.github/workflows/crawl-build.yml'
+      - '.github/workflows/crawl-trunk-build.yml'
     branches:
       - 'main'
   schedule:
