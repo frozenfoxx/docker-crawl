@@ -4,6 +4,7 @@ on:
   push:
     paths:
       - 'crawl/**'
+      - '!crawl/Dockerfile'
       - '.github/workflows/crawl-26-build.yml'
     branches:
       - 'main'
