@@ -18,8 +18,10 @@ RUN apt-get update && \
 
 # Retrieve crawl
 RUN git clone ${CRAWL_REPO} /src/ && \
-    git -C /src/ checkout stone_soup-0.26 && \
-    git -C /src/ pull
+    cd src && \
+    git fetch origin && \
+    git checkout stone_soup-0.26 && \
+    git pull
 
 # Build crawl
 RUN cd /src/crawl-ref/source && \
