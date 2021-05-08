@@ -92,6 +92,24 @@ games = OrderedDict([
         send_json_options = True,
         # env = {"LANG": "en_US.UTF8"},
         )),
+    ("dcss-web-26", dict(
+        name = "Play 0.26",
+        crawl_binary = "/app/bin/crawl",
+        rcfile_path = "/data/rcs/",
+        macro_path = "/data/rcs/",
+        morgue_path = "/data/rcs/%n",
+        inprogress_path = "/data/rcs/running",
+        ttyrec_path = "/data/rcs/ttyrecs/%n",
+        socket_path = "/tmp",
+        client_path = "/app/webserver/game_data/",
+        dir_path = "/data/logfiles/0.26",
+        # cwd = ".",
+        morgue_url = None,
+        show_save_info = True,
+        # milestone_path = "/data/rcs/milestones-trunk",
+        send_json_options = True,
+        # env = {"LANG": "en_US.UTF8"},
+        )),
 ])
 
 

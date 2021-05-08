@@ -13,11 +13,18 @@ spec:
   rules:
   - http:
       paths:
-      - path: /
+      - path: /#play-dcss-web-trunk
         pathType: Prefix
         backend:
           service:
             name: crawl-trunk-service
+            port:
+              number: 8080
+      - path: /#play-dcss-web-26
+        pathType: Prefix
+        backend:
+          service:
+            name: crawl-26-service
             port:
               number: 8080
       - path: /scoring
