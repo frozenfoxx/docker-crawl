@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: crawl-deployment
+  name: crawl-trunk
   namespace: crawl
   labels:
-    app: crawl
+    app: crawl-trunk
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: crawl
+      app: crawl-trunk
   template:
     metadata:
       labels:
-        app: crawl
+        app: crawl-trunk
     spec:
       containers:
       - name: crawl
@@ -23,6 +23,29 @@ spec:
         volumeMounts: 
           - name: azure
             mountPath: /data
+      volumes:
+      - name: azure
+        persistentVolumeClaim:
+          claimName: azurefile
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: crawl-26
+  namespace: crawl
+  labels:
+    app: crawl-26
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: crawl-26
+  template:
+    metadata:
+      labels:
+        app: crawl-26
+    spec:
+      containers:
       - name: crawl-26
         image: saitcho/crawl-26:latest
         ports: 
