@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: crawl-26
+  namespace: crawl
+  labels:
+    app: crawl-26
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: crawl-26
+  template:
+    metadata:
+      labels:
+        app: crawl-26
+    spec:
+      containers:
+      - name: crawl-26
+        image: saitcho/crawl-26:latest
+        ports: 
+        - containerPort: 8080
+        volumeMounts: 
+          - name: azure
+            mountPath: /data
+      volumes:
+      - name: azure
+        persistentVolumeClaim:
+          claimName: azurefile
+          
+apiVersion: v1
+kind: Service
+metadata:
+  name: crawl-26-service
+spec:
+  selector:
+    app: crawl-26
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
