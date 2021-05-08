@@ -9,3 +9,15 @@ spec:
     - protocol: TCP
       port: 8080
       targetPort: 8080
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: crawl-26-service
+spec:
+  selector:
+    app: crawl-26
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080

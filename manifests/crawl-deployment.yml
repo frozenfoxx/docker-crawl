@@ -23,6 +23,13 @@ spec:
         volumeMounts: 
           - name: azure
             mountPath: /data
+      - name: crawl-26
+        image: saitcho/crawl-26:latest
+        ports: 
+        - containerPort: 8080
+        volumeMounts: 
+          - name: azure
+            mountPath: /data
       # volumes:
       # - name: volume
       #   persistentVolumeClaim:
