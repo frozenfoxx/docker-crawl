@@ -103,6 +103,7 @@ games = OrderedDict([
         socket_path = "/tmp",
         client_path = "/app/webserver/game_data/",
         dir_path = "/data/logfiles/0.26",
+        pre_options  = [ "0.26" ]
         # cwd = ".",
         morgue_url = "http://crawl.kirbytoso.xyz/morgue/",
         show_save_info = True,
