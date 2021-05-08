@@ -12,6 +12,13 @@ spec:
   rules:
   - http:
       paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: crawl-trunk-service
+            port:
+              number: 8080
       - path: /scoring
         pathType: Prefix
         backend:
@@ -26,10 +33,3 @@ spec:
             name: scoring-service
             port:
               number: 80
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: crawl-trunk-service
-            port:
-              number: 8080
