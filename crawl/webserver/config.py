@@ -85,8 +85,9 @@ for folder in folders:
 #    by default loads games as defined in `games.d/*.yaml`).
 #
 # All options in this config are documented in games.d/base.yaml.
+game_name = "dcss-web-" + os.environ['CRAWLVERSION']
 games = OrderedDict([
-    ("dcss-web-", dict(
+    (game_name, dict(
         name = "Play trunk",
         crawl_binary = "/app/bin/crawl",
         rcfile_path = rcfiles_dir,
