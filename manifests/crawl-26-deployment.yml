@@ -36,7 +36,12 @@ spec:
         volumeMounts: 
           - name: azure
             mountPath: /data
+          - name: azuredisk
+            mountPath: /websockets
       volumes:
       - name: azure
         persistentVolumeClaim:
           claimName: azurefile
+      - name: azuredisk
+        persistentVolumeClaim:
+          claimName: azure-managed-disk
