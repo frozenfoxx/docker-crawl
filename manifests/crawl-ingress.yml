@@ -6,7 +6,7 @@ metadata:
   annotations:
     kubernetes.io/ingress.class: nginx
     nginx.ingress.kubernetes.io/ssl-redirect: "false"
-    # nginx.ingress.kubernetes.io/use-regex: "true"
+    nginx.ingress.kubernetes.io/use-regex: "true"
     nginx.org/proxy-read-timeout: "3600s"
     nginx.org/proxy-send-timeout: "3600s"
 spec:
@@ -27,14 +27,14 @@ spec:
             name: scoring-service
             port:
               number: 80
-      - path: /#play-dcss-web-git
+      - path: \/(#)play-dcss-web-git
         pathType: Prefix
         backend:
           service:
             name: crawl-git-service
             port:
               number: 8080
-      - path: /#play-dcss-web-0.26
+      - path: \/(#)play-dcss-web-0.26
         pathType: Prefix
         backend:
           service:
