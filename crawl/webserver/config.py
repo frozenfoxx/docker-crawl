@@ -38,7 +38,7 @@ bind_port = 8080
 # )
 
 logging_config = {
-#    "filename": "webtiles.log",
+#    "filename": "webtiles.log",  # uncomment for testing/debugging
     "level": logging.INFO,
     "format": "%(asctime)s %(levelname)s: %(message)s"
 }
@@ -63,9 +63,21 @@ game_data_no_cache = True
 # Watch socket dirs for games not started by the server
 watch_socket_dirs = False
 
-use_game_yaml = True
+use_game_yaml = False
+
 
 # Game configs
+#
+# Set these variables to the path of your mount backed by persistent volume claim.
+rcfiles_dir = "/data/rcs/" + os.environ['CRAWLVERSION']
+morgue_dir="/data/morgue/"
+inprogress_dir="/data/rcs/running/" + os.environ['CRAWLVERSION']
+ttyrec_dir="/data/rcs/ttyrecs/%n/" + os.environ['CRAWLVERSION']
+dirpathroot_dir="/data/logfiles/" + os.environ['CRAWLVERSION']
+folders = {rcfiles_dir, morgue_dir, inprogress_dir, ttyrec_dir, dirpathroot_dir}
+for folder in folders:
+    if not os.path.exists(rcfiles_dir):
+        os.makedirs(rcfiles_dir)
 #
 # You can define game configs in two ways:
 # 1. With a static dictionary `games`
@@ -74,43 +86,25 @@ use_game_yaml = True
 #
 # All options in this config are documented in games.d/base.yaml.
 games = OrderedDict([
-    ("dcss-web-trunk", dict(
+    ("dcss-web-", dict(
         name = "Play trunk",
         crawl_binary = "/app/bin/crawl",
-        rcfile_path = "/data/rcs/",
-        macro_path = "/data/rcs/",
-        morgue_path = "/data/morgue/%n",
-        inprogress_path = "/data/rcs/running",
-        ttyrec_path = "/data/rcs/ttyrecs/%n",
+        rcfile_path = rcfiles_dir,
+        macro_path = rcfiles_dir, # using same path as rcfiles for simplicity
+        morgue_path = morgue_dir,
+        inprogress_path = inprogress_dir,
+        ttyrec_path = ttyrec_dir,
         socket_path = "/tmp",
         client_path = "/app/webserver/game_data/",
-        dir_path = "/data/logfiles/trunk",
+        dir_path = dirpathroot_dir,
         # cwd = ".",
-        morgue_url = "http://crawl.kirbytoso.xyz/morgue/%n/",
+        # morgue_url = "http://crawl.kirbytoso.xyz/morgue/%n/",
+        morgue_url = None,
         show_save_info = True,
         # milestone_path = "/data/rcs/milestones-trunk",
         send_json_options = True,
         # env = {"LANG": "en_US.UTF8"},
-        )),
-    ("dcss-web-26", dict(
-        name = "Play 0.26",
-        crawl_binary = "/app/bin/crawl",
-        rcfile_path = "/data/rcs/",
-        macro_path = "/data/rcs/",
-        morgue_path = "/data/morgue/%n",
-        inprogress_path = "/data/rcs/running",
-        ttyrec_path = "/data/rcs/ttyrecs/%n",
-        socket_path = "/tmp",
-        client_path = "/app/webserver/game_data/",
-        dir_path = "/data/logfiles/0.26",
-        pre_options  = [ "0.26" ]
-        # cwd = ".",
-        morgue_url = "http://crawl.kirbytoso.xyz/morgue/%n/",
-        show_save_info = True,
-        # milestone_path = "/data/rcs/milestones-trunk",
-        send_json_options = True,
-        # env = {"LANG": "en_US.UTF8"},
-        )),
+        ))
 ])
 
 
