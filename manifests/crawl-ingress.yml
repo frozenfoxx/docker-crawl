@@ -17,7 +17,7 @@ spec:
         pathType: Prefix
         backend:
           service:
-            name: crawl-trunk-service
+            name: crawl-git-service
             port:
               number: 8080
       - path: /scoring
@@ -34,11 +34,11 @@ spec:
             name: scoring-service
             port:
               number: 80
-      - path: /#play-dcss-web-trunk
+      - path: /#play-dcss-web-git
         pathType: Exact
         backend:
           service:
-            name: crawl-trunk-service
+            name: crawl-git-service
             port:
               number: 8080
       - path: /#play-dcss-web-26
