@@ -58,6 +58,7 @@ COPY util/webtiles-init-player.sh /app/util/
 COPY webserver/config.py /app/webserver/
 COPY webserver/games.d/* /app/webserver/games.d/
 COPY webserver/banner.html /app/webserver/templates/banner.html
+COPY webserver/game_links.html /app/webserver/templates/game_links.html
 
 # Set Crawl version for container to use
 ENV CRAWLVERSION="0.26"
