@@ -41,10 +41,10 @@ spec:
             name: crawl-26-service
             port:
               number: 8080
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: crawl-git-service
-            port:
-              number: 8080
+      # - path: /
+      #   pathType: Prefix
+      #   backend:
+      #     service:
+      #       name: crawl-git-service
+      #       port:
+      #         number: 8080
