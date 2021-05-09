@@ -110,6 +110,7 @@ games = OrderedDict([
     ("dcss-web-0.26", dict(
         name = "Play 0.26",
         crawl_binary = "/app/bin/crawl",
+        pre_options = [ "0.26" ],
         rcfile_path = rcfiles_dir + "/0.26",
         macro_path = rcfiles_dir + "/0.26", # using same path as rcfiles for simplicity
         morgue_path = morgue_dir,
