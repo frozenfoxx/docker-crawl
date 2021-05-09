@@ -1,6 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
+  namespace: crawl
   name: crawl-26-service
 spec:
   selector:
@@ -12,8 +13,8 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: crawl-26
   namespace: crawl
+  name: crawl-26
   labels:
     app: crawl-26
 spec:

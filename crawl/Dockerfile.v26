@@ -16,7 +16,7 @@ RUN apt-get update && \
   apt-get upgrade -y && \
   apt-get install -y ${BUILD_DEPS} ${APP_DEPS}
 
-# Retrieve crawl
+# Retrieve crawl 0.26
 RUN git clone ${CRAWL_REPO} /src/ && \
     cd src && \
     git fetch origin && \

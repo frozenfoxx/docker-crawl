@@ -1,6 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
+  namespace: crawl
   name: crawl-git-service
 spec:
   selector:
@@ -12,8 +13,8 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: crawl-git
   namespace: crawl
+  name: crawl-git
   labels:
     app: crawl-git
 spec:
