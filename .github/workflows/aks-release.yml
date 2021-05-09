@@ -1,4 +1,4 @@
-on: [pull_request]
+# on: [pull_request]
 
 # Environment variables available to all jobs and steps in this workflow
 env:
