@@ -41,7 +41,7 @@ spec:
             name: crawl-git-service
             port:
               number: 8080
-      - path: /#play-dcss-web-26
+      - path: /#play-dcss-web-0.26
         pathType: Exact
         backend:
           service:
