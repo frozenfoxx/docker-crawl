@@ -27,14 +27,14 @@ spec:
             name: scoring-service
             port:
               number: 80
-      - path: /(#)play-dcss-web-git
+      - path: /dcss-web-git
         pathType: Prefix
         backend:
           service:
             name: crawl-git-service
             port:
               number: 8080
-      - path: /(#)play-dcss-web-0.26
+      - path: /dcss-web-0.26
         pathType: Prefix
         backend:
           service:
