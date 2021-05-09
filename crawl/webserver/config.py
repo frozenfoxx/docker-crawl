@@ -75,7 +75,7 @@ inprogress_dir="/data/rcs/running"
 ttyrec_dir="/data/rcs/ttyrecs"
 dirpathroot_dir="/data/logfiles"
 # Create the folders if they dont exist for the specific version of crawl
-folders = {rcfiles_dir, inprogress_dir, ttyrec_dir, dirpathroot_dir}
+folders = {rcfiles_dir, inprogress_dir, dirpathroot_dir}
 for folder in folders:
     if not os.path.exists(rcfiles_dir + os.environ['CRAWLVERSION']):
         os.makedirs(rcfiles_dir + os.environ['CRAWLVERSION'])
@@ -95,7 +95,7 @@ games = OrderedDict([
         macro_path = rcfiles_dir + "/git", # using same path as rcfiles for simplicity
         morgue_path = morgue_dir,
         inprogress_path = inprogress_dir + "/git",
-        ttyrec_path = ttyrec_dir + "/git" + "/%n/",
+        ttyrec_path = ttyrec_dir + "/%n/",
         socket_path = "/websockets",
         client_path = "/app/webserver/game_data",
         dir_path = dirpathroot_dir + "/git",
