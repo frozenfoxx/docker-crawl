@@ -36,8 +36,6 @@ ENV APP_DEPS="bzip2 liblua5.1-0-dev python3-minimal python3-pip python3-yaml \
     lsof sudo libbot-basicbot-perl" \
   DATA_DIR=/data \
   DEBIAN_FRONTEND=noninteractive
-# Crawl Environment Variables
-ENV CRAWLVERSION="git"
 
 # Install packages for the runtime
 RUN apt-get update && \
@@ -56,6 +54,9 @@ COPY util/webtiles-init-player.sh /app/util/
 COPY webserver/config.py /app/webserver/
 COPY webserver/games.d/* /app/webserver/games.d/
 COPY webserver/banner.html /app/webserver/templates/banner.html
+
+# Set Crawl version for container to use
+ENV CRAWLVERSION="git"
 
 # Copy over the entrypoint
 COPY scripts/entrypoint-webtiles.sh /app/entrypoint.sh
