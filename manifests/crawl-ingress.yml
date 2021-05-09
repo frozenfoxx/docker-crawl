@@ -13,13 +13,6 @@ spec:
   rules:
   - http:
       paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: crawl-git-service
-            port:
-              number: 8080
       - path: /scoring
         pathType: Prefix
         backend:
@@ -46,5 +39,12 @@ spec:
         backend:
           service:
             name: crawl-26-service
+            port:
+              number: 8080
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: crawl-git-service
             port:
               number: 8080
