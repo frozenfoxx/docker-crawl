@@ -69,11 +69,11 @@ use_game_yaml = False
 # Game configs
 #
 # Set these variables to the path of your mount backed by persistent volume claim.
-rcfiles_dir = "/data/rcs/"
-morgue_dir="/data/morgue/"
-inprogress_dir="/data/rcs/running/"
-ttyrec_dir="/data/rcs/ttyrecs/"
-dirpathroot_dir="/data/logfiles/"
+rcfiles_dir = "/data/rcs"
+morgue_dir="/data/morgue"
+inprogress_dir="/data/rcs/running"
+ttyrec_dir="/data/rcs/ttyrecs"
+dirpathroot_dir="/data/logfiles"
 # Create the folders if they dont exist for the specific version of crawl
 folders = {rcfiles_dir, inprogress_dir, ttyrec_dir, dirpathroot_dir}
 for folder in folders:
@@ -91,14 +91,14 @@ games = OrderedDict([
     ("dcss-web-git", dict(
         name = "Play trunk",
         crawl_binary = "/app/bin/crawl",
-        rcfile_path = rcfiles_dir + "/git/",
-        macro_path = rcfiles_dir + "/git/", # using same path as rcfiles for simplicity
+        rcfile_path = rcfiles_dir + "/git",
+        macro_path = rcfiles_dir + "/git", # using same path as rcfiles for simplicity
         morgue_path = morgue_dir,
-        inprogress_path = inprogress_dir + "/git/",
-        ttyrec_path = ttyrec_dir + "/git/" + "/%n/",
+        inprogress_path = inprogress_dir + "/git",
+        ttyrec_path = ttyrec_dir + "/git" + "/%n/",
         socket_path = "/websockets",
-        client_path = "/app/webserver/game_data/",
-        dir_path = dirpathroot_dir + "/git/",
+        client_path = "/app/webserver/game_data",
+        dir_path = dirpathroot_dir + "/git",
         # cwd = ".",
         # morgue_url = "http://crawl.kirbytoso.xyz/morgue/%n/",
         morgue_url = None,
@@ -110,14 +110,14 @@ games = OrderedDict([
     ("dcss-web-0.26", dict(
         name = "Play 0.26",
         crawl_binary = "/app/bin/crawl",
-        rcfile_path = rcfiles_dir + "/0.26/",
-        macro_path = rcfiles_dir + "/0.26/", # using same path as rcfiles for simplicity
+        rcfile_path = rcfiles_dir + "/0.26",
+        macro_path = rcfiles_dir + "/0.26", # using same path as rcfiles for simplicity
         morgue_path = morgue_dir,
-        inprogress_path = inprogress_dir + "/0.26/",
-        ttyrec_path = ttyrec_dir + "/0.26/" + "/%n/",
+        inprogress_path = inprogress_dir + "/0.26",
+        ttyrec_path = ttyrec_dir + "/0.26" + "/%n/",
         socket_path = "/websockets",
-        client_path = "/app/webserver/game_data/",
-        dir_path = dirpathroot_dir + "/0.26/",
+        client_path = "/app/webserver/game_data",
+        dir_path = dirpathroot_dir + "/0.26",
         # cwd = ".",
         # morgue_url = "http://crawl.kirbytoso.xyz/morgue/%n/",
         morgue_url = None,
