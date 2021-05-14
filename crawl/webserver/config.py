@@ -38,7 +38,7 @@ bind_port = 8080
 # )
 
 logging_config = {
-#    "filename": "webtiles.log",  # uncomment for testing/debugging
+    "filename": "webtiles.log",  # uncomment for testing/debugging
     "level": logging.INFO,
     "format": "%(asctime)s %(levelname)s: %(message)s"
 }
