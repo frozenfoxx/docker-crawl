@@ -60,7 +60,7 @@ COPY webserver/games.d/* /app/webserver/games.d/
 COPY webserver/banner.html /app/webserver/templates/banner.html
 COPY webserver/game_links.html /app/webserver/templates/game_links.html
 
-# Set Crawl version for container to use
+# Set Crawl version for container to use (TODO: not currently used)
 ENV CRAWLVERSION="0.26"
 
 # Copy over the entrypoint
