@@ -71,14 +71,14 @@ use_game_yaml = False
 # Set these variables to the path of your mount backed by persistent volume claim.
 rcfiles_dir = "/data/rcs"
 morgue_dir="/data/morgue"
-inprogress_dir="/data/rcs/running"
+inprogress_dir="/data/inprogress"
 ttyrec_dir="/data/rcs/ttyrecs"
 dirpathroot_dir="/data/logfiles"
 # Create the folders if they dont exist for the specific version of crawl
 folders = {rcfiles_dir, inprogress_dir, dirpathroot_dir}
 for folder in folders:
-    if not os.path.exists(rcfiles_dir + os.environ['CRAWLVERSION']):
-        os.makedirs(rcfiles_dir + os.environ['CRAWLVERSION'])
+    if not os.path.exists(folder + "/" + os.environ['CRAWLVERSION']):
+        os.makedirs(folder + "/" + os.environ['CRAWLVERSION'])
 #
 # You can define game configs in two ways:
 # 1. With a static dictionary `games`

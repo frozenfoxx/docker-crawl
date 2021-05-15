@@ -1,10 +1,9 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: crawl-ingress
+  name: web-ingress
   annotations:
     kubernetes.io/ingress.class: nginx
-    nginx.ingress.kubernetes.io/use-regex: "true"
     nginx.org/proxy-read-timeout: "3600s"
     nginx.org/proxy-send-timeout: "3600s"
 spec:
@@ -30,24 +29,43 @@ spec:
             name: scoring-service
             port:
               number: 80
-      - path: /dcss-web-git
-        pathType: Prefix
-        backend:
-          service:
-            name: crawl-git-service
-            port:
-              number: 8080
-      - path: /dcss-web-0.26
-        pathType: Prefix
-        backend:
-          service:
-            name: crawl-26-service
-            port:
-              number: 8080
       - path: /
         pathType: Prefix
         backend:
           service:
             name: crawl-git-service
+            port:
+              number: 8080
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: crawl-ingress
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.org/proxy-read-timeout: "3600s"
+    nginx.org/proxy-send-timeout: "3600s"
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+spec:
+  tls:
+  - hosts:
+    - crawl.kirbytoso.xyz
+    secretName: ingress-tls-csi
+  rules:
+  - host: crawl.kirbytoso.xyz
+    http:
+      paths:
+      - path: /dcss-web-git(/|$)(.*)
+        pathType: Prefix
+        backend:
+          service:
+            name: crawl-git-service
+            port:
+              number: 8080
+      - path: /dcss-web-0.26(/|$)(.*)
+        pathType: Prefix
+        backend:
+          service:
+            name: crawl-26-service
             port:
               number: 8080
