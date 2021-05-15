@@ -18,6 +18,10 @@ Forked from: [frozenfoxx/docker-crawl](https://github.com/frozenfoxx/docker-craw
   * Edit ./scoring/settings/toplink.mako and provide your server URL
   * Edit ./scoring/settings/index.mako and provide your server URL
   * Edit ./webserver/banner.html to customize the Webtiles banner
+* Configure Azure Files share and persistent volume
+  * Create storage account for Azure Files share
+  * Create k8s secret named azure-secret for storage account key
+  * Create Azure Files share on storage account named crawlshare (edit [manifests/azurefiles.pv](manifests/azurefiles.pv) and [manifests/azurefiles.pvc](manifests/azurefiles.pvc) as needed)
 
 ## Deploy
 
