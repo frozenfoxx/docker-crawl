@@ -40,7 +40,7 @@ Forked from: [frozenfoxx/docker-crawl](https://github.com/frozenfoxx/docker-craw
 
   ![Screenshot showing az aks create](./docs/azakscreate.png)
 
-* Get the managed identity client id by running az aks show and make a note of the principalId, clientId, subscriptionId, and nodeResourceGroup for later use.
+* Get the managed identity client id by running az aks show and make a note of the kubelet clientId for later use.
 
   ```shell
   az aks show -n <cluster name> -g <resource group>
@@ -69,15 +69,47 @@ Forked from: [frozenfoxx/docker-crawl](https://github.com/frozenfoxx/docker-craw
 
 * Configure your key vault to allow access to the AKS vnet.
 
-* Set a key vault access policy to allow your AKS managed identity to get secrets and certificates.
+* Set a key vault access policy to allow your AKS managed identity client id to get secrets and certificates.
 
-* Edit akv-secretsProvider.yml with your values.
+* Edit akv-secretsProvider.yml with your values and deploy.
+
+  ```shell
+  kubectl apply -f manifests/akv-secretsProvider.yml
+  ```
 
 * Deploy Ingress controller
 
   ```shell
   helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
   helm repo update
+  helm install ingress-nginx/ingress-nginx --generate-name \
+      --set controller.replicaCount=2 \
+      --set controller.nodeSelector."beta\.kubernetes\.io/os"=linux \
+      --set defaultBackend.nodeSelector."beta\.kubernetes\.io/os"=linux \
+      -f - <<EOF
+  controller:
+    extraVolumes:
+        - name: secrets-store-inline
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: "azure-kvcrawl"
+    extraVolumeMounts:
+        - name: secrets-store-inline
+          mountPath: "/mnt/secrets-store"
+          readOnly: true
+  EOF
+  ```
+
+* Create storage account and fileshare
+
+* Add kubernetes secret for storage account key
+
+  ```shell
+  STORAGE_ACCOUNT=<your storage account name>
+  STORAGE_KEY=<your key>
+  kubectl create secret generic azure-secret --from-literal=azurestorageaccountname=$STORAGE_ACCOUNT --from-literal=azurestorageaccountkey=$STORAGE_KEY
   ```
 
 * kubectl apply -f manifests/

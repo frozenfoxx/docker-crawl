@@ -8,15 +8,14 @@ metadata:
     nginx.ingress.kubernetes.io/use-regex: "true"
     nginx.org/proxy-read-timeout: "3600s"
     nginx.org/proxy-send-timeout: "3600s"
-  labels:
-    aadpodidbinding: azure-pod-identity-binding-selector # The selector defined in AzureIdentityBinding in the previous step
 spec:
   tls:
   - hosts:
     - crawl.kirbytoso.xyz
-    secretName: csi-secrets-store-provider-azure-token-5xdc5
+    secretName: ingress-tls-csi
   rules:
-  - http:
+  - host: crawl.kirbytoso.xyz
+    http:
       paths:
       - path: /scoring
         pathType: Prefix
