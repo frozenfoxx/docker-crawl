@@ -28,7 +28,7 @@ except ImportError:
 dgl_mode = True
 
 bind_nonsecure = True # Set to false to only use SSL
-bind_address = ""
+bind_address = "/dcss-web-git"
 bind_port = 8080
 # Or listen on multiple address/port pairs (overriding the above) with:
 # bind_pairs = (
