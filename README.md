@@ -7,7 +7,13 @@ Docker container and Kubernetes manifests for Dungeon Crawl Stone Soup (DCSS), c
 
 Forked from: [frozenfoxx/docker-crawl](https://github.com/frozenfoxx/docker-crawl)
 
-## Setup
+## Prerequisites (INCOMPLETE)
+
+* [Install Azure CLI](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli)
+
+* [Install Helm v3 or later](https://helm.sh/docs/intro/install/)
+
+## Setup (INCOMPLETE)
 
 * Configure webserver by editing ./crawl/webserver/config.py with your values. Note that trunk is configured here under the games OrderedDict
 * Configure additional games (e.g., sprint, tutorial, zot, stable versions) by editing ./crawl/webserver/games.d/base.yaml
@@ -22,8 +28,56 @@ Forked from: [frozenfoxx/docker-crawl](https://github.com/frozenfoxx/docker-craw
   * Create storage account for Azure Files share
   * Create k8s secret named azure-secret for storage account key
   * Create Azure Files share on storage account named crawlshare (edit [manifests/azurefiles.pv](manifests/azurefiles.pv) and [manifests/azurefiles.pvc](manifests/azurefiles.pvc) as needed)
-
-## Deploy
-
 * All player RCs and webserver database files are located within `/data` within the container. Bind mount a host directory or use a persistent volume claim to maintain persistence. Included manifests use Azure Files for persistence but you can adjust and use whatever makes sense for your environment.
+
+## Deploy (INCOMPLETE)
+
+* Create an AKS cluster with managed identity enabled
+  
+  ```shell
+  az aks create -n <cluster name> -g <resource group> --enable-managed-identity
+  ```
+
+  ![Screenshot showing az aks create](./docs/azakscreate.png)
+
+* Get the managed identity client id by running az aks show and make a note of the principalId, clientId, subscriptionId, and nodeResourceGroup for later use.
+
+  ```shell
+  az aks show -n <cluster name> -g <resource group>
+  ```
+
+  ![Screenshot showing az aks show](./docs/azaksshow.png)
+
+* Get the AKS kubeconfig for your AKs cluster.
+
+  ```shell
+  az aks get-credentials -n <cluster name> -g <resource group>
+  ```
+
+  ![Screenshot showing az aks get-credentials](./docs/azaksgetcreds.png)
+
+* Install the Secrets Store CSI driver and the Azure Key vault provider for the driver.
+
+  ```shell
+  helm repo add csi-secrets-store-provider-azure https://raw.githubusercontent.com/Azure/secrets-store-csi-driver-provider-azure/master/charts
+  helm install csi-secrets-store-provider-azure/csi-secrets-store-provider-azure --generate-name
+  ```
+
+  ![Screenshot showing helm install secrets csi](./docs/helminstallsecretscsi.png)
+
+* Create Azure key vault and import a certificate.
+
+* Configure your key vault to allow access to the AKS vnet.
+
+* Set a key vault access policy to allow your AKS managed identity to get secrets and certificates.
+
+* Edit akv-secretsProvider.yml with your values.
+
+* Deploy Ingress controller
+
+  ```shell
+  helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
+  helm repo update
+  ```
+
 * kubectl apply -f manifests/
