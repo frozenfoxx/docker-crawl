@@ -4,7 +4,6 @@ metadata:
   name: crawl-ingress
   annotations:
     kubernetes.io/ingress.class: nginx
-    nginx.ingress.kubernetes.io/ssl-redirect: "false"
     nginx.ingress.kubernetes.io/use-regex: "true"
     nginx.org/proxy-read-timeout: "3600s"
     nginx.org/proxy-send-timeout: "3600s"
