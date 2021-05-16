@@ -1,1 +1,4 @@
 *.secretsIgnore
+.env
+flask_session
+Pipfile.lock
