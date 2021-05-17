@@ -1,6 +1,6 @@
 # docker-crawl
 
-[![Crawl-build-and-push](https://github.com/dkirby-ms/docker-crawl/actions/workflows/crawl-build.yml/badge.svg)](https://github.com/dkirby-ms/docker-crawl/actions/workflows/crawl-build.yml)
+[![Crawl-build-trunk-and-push](https://github.com/dkirby-ms/docker-crawl/actions/workflows/crawl-git-build.yml/badge.svg)](https://github.com/dkirby-ms/docker-crawl/actions/workflows/crawl-git-build.yml)
 [![Scoring-build-and-push](https://github.com/dkirby-ms/docker-crawl/actions/workflows/scoring-build.yml/badge.svg)](https://github.com/dkirby-ms/docker-crawl/actions/workflows/scoring-build.yml)
 
 Docker container and Kubernetes manifests for Dungeon Crawl Stone Soup (DCSS), crawl-scoring, and eventually beem.
