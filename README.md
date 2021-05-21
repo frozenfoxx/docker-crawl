@@ -30,7 +30,7 @@ Forked from: [frozenfoxx/docker-crawl](https://github.com/frozenfoxx/docker-craw
   * Create Azure Files share on storage account named crawlshare (edit [manifests/azurefiles.pv](manifests/azurefiles.pv) and [manifests/azurefiles.pvc](manifests/azurefiles.pvc) as needed)
 * All player RCs and webserver database files are located within `/data` within the container. Bind mount a host directory or use a persistent volume claim to maintain persistence. Included manifests use Azure Files for persistence but you can adjust and use whatever makes sense for your environment.
 
-## Deploy (INCOMPLETE)
+## Deploy on AKS (INCOMPLETE)
 
 * Create an AKS cluster with managed identity enabled
   
