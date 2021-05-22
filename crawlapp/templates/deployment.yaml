@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "crawlapp.fullname" . }}
+  labels:
+    {{- include "crawlapp.labels" . | nindent 4 }}
+spec:
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicaCount }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "crawlapp.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "crawlapp.selectorLabels" . | nindent 8 }}
+    spec:
+      containers:
+      - name: {{ .Values.crawlGitImage.name }}
+        image: "{{ .Values.crawlGitImage.repository }}:{{ .Values.crawlGitImage.tag | default .Chart.AppVersion }}"
+        ports:
+        - containerPort: 8080
+        volumeMounts: 
+          - name: datadir
+            mountPath: /data
+          - name: sockets
+            mountPath: /websockets
+      - name: {{ .Values.crawl26Image.name }}
+        image: "{{ .Values.crawl26Image.repository }}:{{ .Values.crawl26Image.tag | default .Chart.AppVersion }}"
+        ports:
+        - containerPort: 8080
+        volumeMounts: 
+          - name: datadir
+            mountPath: /data
+          - name: sockets
+            mountPath: /websockets
+      - name: {{ .Values.scoringImage.name }}
+        image: "{{ .Values.scoringImage.repository }}:{{ .Values.scoringImage.tag | default .Chart.AppVersion }}"
+        ports:
+        - containerPort: 80
+        volumeMounts: 
+          - name: datadir
+            mountPath: /data
+      volumes:
+      - name: datadir
+        persistentVolumeClaim:
+          claimName: azurefile
+      - name: sockets
+        persistentVolumeClaim:
+          claimName: azure-managed-disk
