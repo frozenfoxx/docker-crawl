@@ -16,23 +16,18 @@ spec:
       labels:
         {{- include "crawlapp.selectorLabels" . | nindent 8 }}
     spec:
-      ####
-      ##
-      ##
-      ##
       # work on adding range lookup for containers array here tomorrow 5/22/2021
       {{- if .Values.containers }}
       containers:
         {{- range .Values.containers }}
-        - name: {{- .name }}
-          image: "{{ .repository }}:{{ .tag | default .Chart.AppVersion }}"
-          pullPolicy: {{- .pullPolicy }}
-          tag: {{- .tag }}
+        - name: {{ .name }}
+          image: "{{ .repository }}:{{ .tag }}"
+          imagePullPolicy: {{ .pullPolicy }}
           ports:
           - containerPort: 8080
           volumeMounts:
-            {{- range .Values.volumes }}
-            - name: {{ .dirname }}
+            {{- range $.Values.volumes }}
+            - name: {{ .name }}
               mountPath: {{ .mountPath }}
             {{- end }}
         {{- end }}

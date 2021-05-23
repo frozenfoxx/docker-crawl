@@ -8,34 +8,40 @@ containers:
   - name: "crawl-git"
     repository: saitcho/crawl
     pullPolicy: IfNotPresent
-    # tag: "latest"  # Overrides the image tag whose default is the chart appVersion.
+    tag: "latest"  # Overrides the image tag whose default is the chart appVersion.
     ports:
-        - containerPort: 8080
-  - name: "crawl-26"
-    repository: saitcho/crawl-26
-    pullPolicy: IfNotPresent
-    # tag: "latest"
-    ports:
-        - containerPort: 8080
+      - containerPort: 8080
+  # - name: "crawl-26"
+  #   repository: saitcho/crawl-26
+  #   pullPolicy: IfNotPresent
+  #   tag: "latest"
+  #   ports:
+  #     - containerPort: 8080
   - name: "crawl-scoring"
     repository: saitcho/scoring
     pullPolicy: IfNotPresent
-    # tag: "latest"
+    tag: "latest"
     ports:
-        - containerPort: 8080
+      - containerPort: 80
 
-## SIMPLIFLY THIS and related pvc.yaml template - lots of duplicate values
+# azureFiles:  # for aks prod with azure files
+#   name: "crawlfiles"
+#   storage: 5Gi
+#   storageClassName: "azurefile"
+#   shareName: "crawlshare"
+#   secretName: "crawlshareStorageAccountKey"
+
 volumes:
   - name: "data"
-    dirname: "datadir"
     claimName: "datadirclaim"
     mountPath: /data
     storageClassName: "standard"
-  - name: "sockets" 
-    dirname: "socketsdir"
+    storage: 5Gi
+  - name: "websockets" 
     claimName: "socketsdirclaim"
     mountPath: /websockets
     storageClassName: "standard"
+    storage: 5Gi
 
 service:
   crawl-git-name: "crawl-git-service"
@@ -43,19 +49,41 @@ service:
   crawl-scoring-name: "scoring-service"
   port: 80
 
-# persistentVolumes: # for aks prod with azure files
-#   name: "crawlfiles"
-#   storage: 5Gi
-#   datavolumeStorageClassName: "azurefile"
-#   socketsvolumeStorageClassName: "azure-managed-disk"
-#   shareName: "crawlshare"
-#   secretName: "crawlshareStorageAccountKey"
-  
-persistentVolumes: # for minikube dev
-  name: "crawlfiles"
-  storage: 5Gi
-  datavolumeStorageClassName: "standard"
-  socketsvolumeStorageClassName: "standard"
+ingress:
+  enabled: true
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    proxy-connect-timeout: "3600s"
+    nginx.org/proxy-read-timeout: "3600s"
+    nginx.org/proxy-send-timeout: "3600s"
+  hosts:
+    - host: "localhost"
+      paths:
+      - path: /scoring
+        pathType: Prefix
+        backend:
+          service:
+            name: "scoring-service"
+            port:
+              number: 80
+      - path: /morgue
+        pathType: Prefix
+        backend:
+          service:
+            name: "scoring-service"
+            port:
+              number: 80
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: "crawl-git-service"
+            port:
+              number: 8080
+  # tls:
+  #   - secretName: "ingress-tls-csi"
+  #     hosts:
+  #       - crawl.kirbytoso.xyz
 
 imagePullSecrets: []
 nameOverride: ""
@@ -82,42 +110,6 @@ securityContext: {}
   # readOnlyRootFilesystem: true
   # runAsNonRoot: true
   # runAsUser: 1000
-
-ingress:
-  enabled: true
-  annotations:
-    kubernetes.io/ingress.class: nginx
-    proxy-connect-timeout: "3600s"
-    nginx.org/proxy-read-timeout: "3600s"
-    nginx.org/proxy-send-timeout: "3600s"
-  hosts:
-    - host: "crawl.kirbytoso.xyz"
-      paths:
-      - path: /scoring
-        pathType: Prefix
-        backend:
-          service:
-            name: "scoring-service"
-            port:
-              number: 80
-      - path: /morgue
-        pathType: Prefix
-        backend:
-          service:
-            name: "scoring-service"
-            port:
-              number: 80
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: "crawl-git-service"
-            port:
-              number: 8080
-  tls:
-    - secretName: "ingress-tls-csi"
-      hosts:
-        - crawl.kirbytoso.xyz
 
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
