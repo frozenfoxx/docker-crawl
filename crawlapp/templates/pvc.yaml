@@ -1,0 +1,47 @@
+{{- if eq .Values.persistentVolumes.datavolumeStorageClassName "azurefile" }}
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: {{ .Values.persistentVolumes.name }}
+spec:
+  capacity:
+    storage: 5Gi
+  storageClassName: {{ .Values.persistentVolumes.datavolumeStorageClassName }}
+  accessModes:
+    - ReadWriteMany
+  azureFile:
+    secretName: {{ .Values.persistentVolumes.secretName }}
+    shareName: {{ .Values.persistentVolumes.shareName }}
+    readOnly: false
+  mountOptions:
+  - dir_mode=0755
+  - file_mode=0755
+  - uid=0
+  - gid=0
+  - mfsymlinks
+  - nobrl
+---
+{{- end }}
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ .Values.volumes.datadirClaimName }}
+spec:
+  accessModes:
+    - ReadWriteMany
+  storageClassName: {{ .Values.persistentVolumes.datavolumeStorageClassName }}
+  resources:
+    requests:
+      storage: 5Gi
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ .Values.volumes.socketsdirName }}
+spec:
+  accessModes:
+  - ReadWriteOnce
+  storageClassName: {{ .Values.persistentVolumes.socketsvolumeStorageClassName }}
+  resources:
+    requests:
+      storage: 5Gi

@@ -1,44 +1,61 @@
-# Default values for exampleapp.
+# Default values for crawlapp.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
 replicaCount: 1
 
-crawlGitImage:
-  name: crawl-git
-  repository: saitcho/crawl
-  pullPolicy: IfNotPresent
-  # Overrides the image tag whose default is the chart appVersion.
-  tag: "latest"
+containers:
+  - name: "crawl-git"
+    repository: saitcho/crawl
+    pullPolicy: IfNotPresent
+    # tag: "latest"  # Overrides the image tag whose default is the chart appVersion.
+    ports:
+        - containerPort: 8080
+  - name: "crawl-26"
+    repository: saitcho/crawl-26
+    pullPolicy: IfNotPresent
+    # tag: "latest"
+    ports:
+        - containerPort: 8080
+  - name: "crawl-scoring"
+    repository: saitcho/scoring
+    pullPolicy: IfNotPresent
+    # tag: "latest"
+    ports:
+        - containerPort: 8080
 
-crawl26Image:
-  name: crawl-26
-  repository: saitcho/crawl-26
-  pullPolicy: IfNotPresent
-  # Overrides the image tag whose default is the chart appVersion.
-  tag: "latest"
-
-scoringImage:
-  name: crawl-scoring
-  repository: saitcho/scoring
-  pullPolicy: IfNotPresent
-  # Overrides the image tag whose default is the chart appVersion.
-  tag: "latest"
-
+## SIMPLIFLY THIS and related pvc.yaml template - lots of duplicate values
 volumes:
-  datadirClaimName: azurefile
-  socketsClaimName: azure-managed-disk
+  - name: "data"
+    dirname: "datadir"
+    claimName: "datadirclaim"
+    mountPath: /data
+    storageClassName: "standard"
+  - name: "sockets" 
+    dirname: "socketsdir"
+    claimName: "socketsdirclaim"
+    mountPath: /websockets
+    storageClassName: "standard"
 
 service:
-  crawl-git-name: crawl-git-service
-  crawl-26-name: crawl-26-service
-  crawl-scoring-name: scoring-service
+  crawl-git-name: "crawl-git-service"
+  crawl-26-name: "crawl-26-service"
+  crawl-scoring-name: "scoring-service"
+  port: 80
 
-persistentVolumes:
-  name: crawlfiles
-  storage: 5Gi
-  storageClassName: "azurefile"
+# persistentVolumes: # for aks prod with azure files
+#   name: "crawlfiles"
+#   storage: 5Gi
+#   datavolumeStorageClassName: "azurefile"
+#   socketsvolumeStorageClassName: "azure-managed-disk"
+#   shareName: "crawlshare"
+#   secretName: "crawlshareStorageAccountKey"
   
+persistentVolumes: # for minikube dev
+  name: "crawlfiles"
+  storage: 5Gi
+  datavolumeStorageClassName: "standard"
+  socketsvolumeStorageClassName: "standard"
 
 imagePullSecrets: []
 nameOverride: ""
@@ -67,21 +84,40 @@ securityContext: {}
   # runAsUser: 1000
 
 ingress:
-  enabled: false
-  annotations: {}
-    # kubernetes.io/ingress.class: nginx
-    # kubernetes.io/tls-acme: "true"
+  enabled: true
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    proxy-connect-timeout: "3600s"
+    nginx.org/proxy-read-timeout: "3600s"
+    nginx.org/proxy-send-timeout: "3600s"
   hosts:
-    - host: chart-example.local
+    - host: "crawl.kirbytoso.xyz"
       paths:
-      - path: /
+      - path: /scoring
+        pathType: Prefix
         backend:
-          serviceName: chart-example.local
-          servicePort: 80
-  tls: []
-  #  - secretName: chart-example-tls
-  #    hosts:
-  #      - chart-example.local
+          service:
+            name: "scoring-service"
+            port:
+              number: 80
+      - path: /morgue
+        pathType: Prefix
+        backend:
+          service:
+            name: "scoring-service"
+            port:
+              number: 80
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: "crawl-git-service"
+            port:
+              number: 8080
+  tls:
+    - secretName: "ingress-tls-csi"
+      hosts:
+        - crawl.kirbytoso.xyz
 
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious

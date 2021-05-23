@@ -16,36 +16,30 @@ spec:
       labels:
         {{- include "crawlapp.selectorLabels" . | nindent 8 }}
     spec:
+      ####
+      ##
+      ##
+      ##
+      # work on adding range lookup for containers array here tomorrow 5/22/2021
+      {{- if .Values.containers }}
       containers:
-      - name: {{ .Values.crawlGitImage.name }}
-        image: "{{ .Values.crawlGitImage.repository }}:{{ .Values.crawlGitImage.tag | default .Chart.AppVersion }}"
-        ports:
-        - containerPort: 8080
-        volumeMounts: 
-          - name: datadir
-            mountPath: /data
-          - name: sockets
-            mountPath: /websockets
-      - name: {{ .Values.crawl26Image.name }}
-        image: "{{ .Values.crawl26Image.repository }}:{{ .Values.crawl26Image.tag | default .Chart.AppVersion }}"
-        ports:
-        - containerPort: 8080
-        volumeMounts: 
-          - name: datadir
-            mountPath: /data
-          - name: sockets
-            mountPath: /websockets
-      - name: {{ .Values.scoringImage.name }}
-        image: "{{ .Values.scoringImage.repository }}:{{ .Values.scoringImage.tag | default .Chart.AppVersion }}"
-        ports:
-        - containerPort: 80
-        volumeMounts: 
-          - name: datadir
-            mountPath: /data
+        {{- range .Values.containers }}
+        - name: {{- .name }}
+          image: "{{ .repository }}:{{ .tag | default .Chart.AppVersion }}"
+          pullPolicy: {{- .pullPolicy }}
+          tag: {{- .tag }}
+          ports:
+          - containerPort: 8080
+          volumeMounts:
+            {{- range .Values.volumes }}
+            - name: {{ .dirname }}
+              mountPath: {{ .mountPath }}
+            {{- end }}
+        {{- end }}
+      {{- end }}
       volumes:
-      - name: datadir
-        persistentVolumeClaim:
-          claimName: azurefile
-      - name: sockets
-        persistentVolumeClaim:
-          claimName: azure-managed-disk
+        {{- range .Values.volumes }}
+        - name: {{ .name }}
+          persistentVolumeClaim:
+            claimName: {{ .claimName }}
+        {{- end }}
